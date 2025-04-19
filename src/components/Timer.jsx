@@ -19,10 +19,10 @@ export default function Timer(){
     return(
         <>
         <div className="flex relative justify-center items-center">
-            <div className="text-4xl mt-4 text-white/90 font-signika">{currTime}</div>
+            <div className="rounded-lg text-5xl mt-4 text-red-50 font-signika">{currTime}</div>
             <div className="text-white/60 absolute top-0 right-0 text-sm">{currDay}</div>
         </div>
-        <div className="text-red-500/80 text-center text-xl mt-2 ">{headerLine}</div>
+        <div className="text-orange-200 text-center text-2xl mt-2 ">{headerLine}</div>
         </>
     )
 }

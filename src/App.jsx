@@ -6,7 +6,9 @@ function App() {
   return(
     <div className="bg-gradient-to-tr from-[#1a0008] via-[#2a0a14] to-black min-h-screen p-5 font-caveat">
         <Timer/>
-        <Tasks/>
+        <div className="grid grid-cols-3 mt-8">
+          <Tasks/>
+        </div>
     </div>
   )
 }
