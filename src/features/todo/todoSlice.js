@@ -3,7 +3,8 @@ import { createSlice, nanoid } from "@reduxjs/toolkit"
 
 
 const initialState={
-    todos: []
+    todos: [],
+    date: (new Date()).setHours(0,0,0,0),
 }
 
 export const todoSlice= createSlice({
