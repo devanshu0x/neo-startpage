@@ -48,7 +48,7 @@ function Task({ description, startDate, completed, id }) {
     <li
       className={`flex justify-between items-center p-3 ${
         completed
-          ? "bg-green-900/30 hover:bg-green-900/70 border-green-700"
+          ? "bg-indigo-900/20 hover:bg-indigo-900/70 border-green-700"
           : delay === 0
           ? "bg-black/50 hover:bg-neutral-900/70 border-blue-700"
           : "bg-red-400/10 hover:bg-red-600/10 border-red-700"
