@@ -2,14 +2,17 @@ import { differenceInDays } from "date-fns";
 import { Check, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {addTodo, removeTodo,toggleComplete} from "../features/todo/todoSlice"
-
+import {
+  addTodo,
+  removeTodo,
+  toggleComplete,
+} from "../features/todo/todoSlice";
 
 export default function Tasks() {
-  const tasks= useSelector(state => state.todos)
+  const tasks = useSelector((state) => state.todos);
   return (
-    <div className="bg-red-950/80 rounded-lg p-4 h-[70vh] overflow-y-auto">
-      <h2 className="text-center text-3xl font-bold text-red-50">Tasks</h2>
+    <div className="bg-gray-900/40 rounded-lg p-4 border border-indigo-900 shadow-lg backdrop-blur-sm h-[70vh] w-100 overflow-y-auto">
+      <h2 className=" text-2xl text-blue-300 tracking-wide">Tasks</h2>
       <TaskAdder />
       <ul className="space-y-3">
         {tasks.map((li) => (
@@ -27,40 +30,51 @@ export default function Tasks() {
 }
 
 function Task({ description, startDate, completed, id }) {
-  const delay = differenceInDays((new Date()).setHours(0,0,0,0),startDate);
-  const dispatch=useDispatch();
-  function removeTask(){
-    dispatch(removeTodo({id}))
+  const delay = differenceInDays(new Date().setHours(0, 0, 0, 0), startDate);
+  const dispatch = useDispatch();
+  function removeTask() {
+    dispatch(removeTodo({ id }));
   }
-  function toggleCompleteHandler(){
-    dispatch(toggleComplete({
-      id,
-      completed:!completed
-    }))
+  function toggleCompleteHandler() {
+    dispatch(
+      toggleComplete({
+        id,
+        completed: !completed,
+      })
+    );
   }
-  console.log(delay);
+
   return (
-    <li className="flex justify-between items-center bg-red-900/30 rounded-md p-3 font-signika">
+    <li
+      className={`flex justify-between items-center p-3 ${
+        completed
+          ? "bg-green-900/30 hover:bg-green-900/70 border-green-700"
+          : delay === 0
+          ? "bg-black/50 hover:bg-neutral-900/70 border-blue-700"
+          : "bg-red-400/10 hover:bg-red-600/10 border-red-700"
+      } transition-colors duration-200 border-l-2 `}
+    >
       <div className="flex items-center gap-3">
         <button
           onClick={() => toggleCompleteHandler(id)}
-          className={`w-6 h-6 rounded flex items-center justify-center border ${
-            completed
-              ? "bg-amber-400/80 border-amber-200"
-              : "bg-transparent border-amber-100 hover:border-amber-200"
+          className={`w-5 h-5 rounded-full flex items-center justify-center border bg-transparent ${
+            completed ? " border-green-400" : delay===0? " border-blue-400": "border-red-400"
           }`}
         >
-          {completed && <Check size={16} className="text-red-100" />}
+          {completed && <Check size={16} className="text-green-400" />}
         </button>
         <div
-          className={`text-md ${
-            completed ? "line-through text-red-300/60" : "text-red-100"
+          className={`flex-grow text-sm ${
+            completed ? "line-through text-gray-500" : "text-gray-300"
           }`}
         >
           {description}
         </div>
       </div>
-      <button onClick={removeTask} className="text-red-200 hover:text-red-500 transition-colors duration-300">
+      <button
+        onClick={removeTask}
+        className="text-red-400/50 hover:text-red-400 transition-colors duration-300"
+      >
         <Trash2 size={18} />
       </button>
     </li>
@@ -69,15 +83,19 @@ function Task({ description, startDate, completed, id }) {
 
 function TaskAdder() {
   const [task, setTask] = useState("");
-  const dispatch= useDispatch()
+  const dispatch = useDispatch();
   function addTask() {
-    dispatch(addTodo({
-      description:task
-    }));
-    setTask("")
+    if (task.trim() !== "") {
+      dispatch(
+        addTodo({
+          description: task,
+        })
+      );
+      setTask("");
+    }
   }
   return (
-    <div className="flex mt-3 mb-6 font-signika">
+    <div className="flex mt-6 mb-5">
       <input
         type="text"
         value={task}
@@ -88,13 +106,13 @@ function TaskAdder() {
           }
         }}
         placeholder="Add a new task..."
-        className="flex-grow bg-red-900/30 text-red-100 rounded-l-md px-4 py-2 border-red-800 border focus:outline-none"
+        className="flex-grow px-3 py-2 bg-black/50 border-b-2 border-indigo-800 focus:border-blue-400 focus:outline-none text-gray-300 placeholder-gray-500"
       />
       <button
         onClick={addTask}
-        className="bg-red-800 hover:bg-red-700 px-4 rounded-r-md flex items-center justify-center"
+        className="bg-indigo-900 hover:bg-indigo-800 px-3 py-2 flex items-center justify-center transition-colors duration-200"
       >
-        <Plus size={20} className="text-red-100"/>
+        <Plus size={20} className="text-blue-200" />
       </button>
     </div>
   );
