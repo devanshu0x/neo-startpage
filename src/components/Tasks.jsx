@@ -2,14 +2,10 @@ import { differenceInDays } from "date-fns";
 import { Check, Plus, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addTodo,
-  removeTodo,
-  toggleComplete,
-} from "../features/todo/todoSlice";
+import { addTask, removeTask, toggleComplete } from "../features/todo/taskSlice";
 
 export default function Tasks() {
-  const tasks = useSelector((state) => state.todos);
+  const tasks = useSelector((state) => state.task.tasks);
   return (
     <div className="bg-gray-900/40 rounded-lg p-4 border border-indigo-900 shadow-lg backdrop-blur-sm h-[70vh] w-100 overflow-y-auto">
       <h2 className=" text-2xl text-blue-300 tracking-wide">Tasks</h2>
@@ -32,8 +28,8 @@ export default function Tasks() {
 function Task({ description, startDate, completed, id }) {
   const delay = differenceInDays(new Date().setHours(0, 0, 0, 0), startDate);
   const dispatch = useDispatch();
-  function removeTask() {
-    dispatch(removeTodo({ id }));
+  function deleteTask() {
+    dispatch(removeTask(id));
   }
   function toggleCompleteHandler() {
     dispatch(
@@ -72,7 +68,7 @@ function Task({ description, startDate, completed, id }) {
         </div>
       </div>
       <button
-        onClick={removeTask}
+        onClick={deleteTask}
         className="text-red-400/50 hover:text-red-400 transition-colors duration-300"
       >
         <Trash2 size={18} />
@@ -84,12 +80,12 @@ function Task({ description, startDate, completed, id }) {
 function TaskAdder() {
   const [task, setTask] = useState("");
   const dispatch = useDispatch();
-  function addTask() {
+  function addNewTask() {
     if (task.trim() !== "") {
       dispatch(
-        addTodo({
-          description: task,
-        })
+        addTask(
+          task,
+        )
       );
       setTask("");
     }
@@ -102,14 +98,14 @@ function TaskAdder() {
         onChange={(e) => setTask(e.target.value)}
         onKeyUp={(e) => {
           if (e.key === "Enter") {
-            addTask();
+            addNewTask();
           }
         }}
         placeholder="Add a new task..."
         className="flex-grow px-3 py-2 bg-black/50 border-b-2 border-indigo-800 focus:border-blue-400 focus:outline-none text-gray-300 placeholder-gray-500"
       />
       <button
-        onClick={addTask}
+        onClick={addNewTask}
         className="bg-indigo-900 hover:bg-indigo-800 px-3 py-2 flex items-center justify-center transition-colors duration-200"
       >
         <Plus size={20} className="text-blue-200" />
