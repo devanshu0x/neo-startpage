@@ -25,7 +25,7 @@ export const fetchGithubData = createAsyncThunk("fetchGithubData", async (_,thun
 });
 
 export const fetchCodeforcesData = createAsyncThunk("fetchCodeforcesData", async (_,thunkAPI) => {
-    const user=thunkAPI.getState().stats.githubId;
+    const user=thunkAPI.getState().stats.codeforcesId;
     if(!user) return null;
     const [userRes, contestRes] = await Promise.all([
         fetch(`https://codeforces.com/api/user.info?handles=${user}`),

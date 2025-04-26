@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  changeCodeforcesId,
+  changeGithubId,
   fetchCodeforcesData,
   fetchGithubData,
 } from "../features/stats/statsSlice";
@@ -29,11 +31,13 @@ function StatsBoard() {
 
 const GithubStats = ({setActiveService, setShowModal}) => {
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(fetchGithubData);
-  });
-
   const githubData = useSelector((state) => state.stats.githubData);
+  const githubId=useSelector((state)=> state.stats.githubId)
+
+  useEffect(() => {
+    dispatch(fetchGithubData());
+  },[githubId]);
+
   const handleIdChange= ()=>{
     setActiveService("github");
     setShowModal(true);
@@ -79,10 +83,11 @@ const GithubStats = ({setActiveService, setShowModal}) => {
 
 const CodeforcesStats = ({setActiveService, setShowModal}) => {
   const dispatch = useDispatch();
+  const codeforcesData = useSelector((state) => state.stats.codeforcesData);
+  const codeforcesId= useSelector((state)=>state.stats.codeforcesId)
   useEffect(() => {
     dispatch(fetchCodeforcesData());
-  }, []);
-  const codeforcesData = useSelector((state) => state.stats.codeforcesData);
+  }, [codeforcesId]);
 
   const handleIdChange= ()=>{
     setActiveService("codeforces");
@@ -143,17 +148,22 @@ const CodeforcesStats = ({setActiveService, setShowModal}) => {
 
 function ChangeIdModal({ setShowModal, activeService }) {
   const [userId, setUserId] = useState("");
+  const dispatch=useDispatch();
   
   function handleFormSubmit(e) {
     e.preventDefault();
-    // Handle the ID change based on activeService
-    // Then close the modal
+    if(activeService==="github"){
+      dispatch(changeGithubId(userId));
+    }
+    else{
+      dispatch(changeCodeforcesId(userId));
+    }
     setShowModal(false);
   }
   
   return (
     <div className="absolute inset-0 bg-black/70  flex justify-center items-center z-10">
-      <div className="bg-black/40 rounded-lg border border-indigo-900 p-6 w-96 shadow-lg shadow-indigo-900/30">
+      <div className="bg-black/80 rounded-lg border border-indigo-900 p-6 w-96 shadow-lg shadow-indigo-900/30">
         <h3 className="text-xl font-semibold mb-4 text-center">
           {activeService === "github" ? (
             <span className="text-violet-400">Change GitHub ID</span>
