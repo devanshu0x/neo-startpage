@@ -1,6 +1,6 @@
 # FocusBoard
 
-![Image](https://github.com/user-attachments/assets/91122cfb-1959-42b2-a1d9-080edc7a7880)
+![Image](https://github.com/user-attachments/assets/a5996625-ba97-4258-a2af-c796386f1edc)
 
 A startpage for programmers to easily track their daily tasks.
 
