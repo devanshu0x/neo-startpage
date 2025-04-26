@@ -1,12 +1,22 @@
-# React + Vite
+# FocusBoard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Image](https://github.com/user-attachments/assets/91122cfb-1959-42b2-a1d9-080edc7a7880)
 
-Currently, two official plugins are available:
+A startpage for programmers to easily track their daily tasks.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[Demo](https://devanshu0x.github.io/FocusBoard/)
 
-## Expanding the ESLint configuration
+## Introduction
+FocusBoard is a simple startpage with space based theme for your browser to easily track your activities through a integrated tasks manager where you can add/remove tasks, mark them as complete/incomplete. It uses localstorage to store tasks so you don't need any server/db to store them.
+> Pitfall: Don't store sensitive information in tasks
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Theres a stats board where you can see your codeforces and github stats by just providing your username. Its using public APIs for this, so no API keys are required.
+
+## Usage
+The easiest way to set it up is using the repositories demo with one of the many new tab override extensions like [this one for firefox](https://addons.mozilla.org/en-US/firefox/addon/new-tab-override/) or [this one for chrome](https://chrome.google.com/webstore/detail/new-tab-redirect/icpgjfneehieebagbmdbhnlpiopdcmna).
+
+Install the extension and set `https://devanshu0x.github.io/FocusBoard/` as new tab url.
+
+OR
+
+You can clone this repo apply necessary changes(if you want) and host it somewhere (you can use gh-pages for free hosting) and just add that url to tab override extension
