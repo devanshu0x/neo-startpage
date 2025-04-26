@@ -1,10 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-export const fetchGithubData = createAsyncThunk("fetchGithubData", async () => {
+export const fetchGithubData = createAsyncThunk("fetchGithubData", async (_,thunkAPI) => {
+    const user=thunkAPI.getState().stats.githubId;
+    if(!user) return null;
     const [userRes, eventsRes] = await Promise.all([
-        fetch("https://api.github.com/users/devanshu0x"),
-        fetch("https://api.github.com/users/devanshu0x/events")
+        fetch(`https://api.github.com/users/${user}`),
+        fetch(`https://api.github.com/users/${user}/events`)
     ]);
+
+    console.log(user);
 
     const [userData, eventsData] = await Promise.all([
         userRes.json(),
@@ -20,10 +24,12 @@ export const fetchGithubData = createAsyncThunk("fetchGithubData", async () => {
     };
 });
 
-export const fetchCodeforcesData = createAsyncThunk("fetchCodeforcesData", async () => {
+export const fetchCodeforcesData = createAsyncThunk("fetchCodeforcesData", async (_,thunkAPI) => {
+    const user=thunkAPI.getState().stats.githubId;
+    if(!user) return null;
     const [userRes, contestRes] = await Promise.all([
-        fetch("https://codeforces.com/api/user.info?handles=Devblitz"),
-        fetch("https://codeforces.com/api/user.rating?handle=Devblitz")
+        fetch(`https://codeforces.com/api/user.info?handles=${user}`),
+        fetch(`https://codeforces.com/api/user.rating?handle=${user}`)
     ]);
 
     const [userData, contestData] = await Promise.all([
@@ -53,12 +59,22 @@ const initialState = {
     loadingGithub: false,
     errorGithub: null,
     loadingCodeforces: false,
-    errorCodeforces: null, 
+    errorCodeforces: null,
+    codeforcesId: null,
+    githubId:null 
 };
 
 const statsSlice = createSlice({
     name: "stats",
     initialState,
+    reducers:{
+        changeGithubId: (state,action)=>{
+            state.githubId=action.payload
+        },
+        changeCodeforcesId: (state,action)=>{
+            state.codeforcesId=action.payload
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(fetchGithubData.pending, (state) => {
             state.loadingGithub = true;
@@ -87,5 +103,7 @@ const statsSlice = createSlice({
         });
     }
 });
+
+export const {changeCodeforcesId,changeGithubId}=statsSlice.actions
 
 export default statsSlice.reducer;
