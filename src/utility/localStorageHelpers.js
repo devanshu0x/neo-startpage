@@ -14,7 +14,7 @@ export const loadFromLocalStorage = () => {
         task:{
           ...state.task,
           date: new Date().setHours(0, 0, 0, 0),
-          todos: state.task.tasks.filter((task) => !task.completed),
+          tasks: state.task.tasks.filter((task) => !task.completed),
         }
         
       };
