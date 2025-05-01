@@ -50,17 +50,17 @@ function Task({ description, startDate, completed, id }) {
           : "bg-red-400/10 hover:bg-red-600/10 border-red-700"
       } transition-colors duration-200 border-l-2 `}
     >
-      <div className="flex items-center gap-3">
+      <div className="grid grid-cols-12 gap-3 items-center">
         <button
           onClick={() => toggleCompleteHandler(id)}
-          className={`w-5 h-5 rounded-full flex items-center justify-center border bg-transparent ${
+          className={`col-span-1 w-5 h-5 rounded-full flex items-center justify-center border bg-transparent ${
             completed ? " border-green-400" : delay===0? " border-blue-400": "border-red-400"
           }`}
         >
           {completed && <Check size={16} className="text-green-400" />}
         </button>
         <div
-          className={`flex-grow text-sm ${
+          className={`flex-grow text-sm col-span-11 break-words whitespace-normal ${
             completed ? "line-through text-gray-500" : "text-gray-300"
           }`}
         >
@@ -69,7 +69,7 @@ function Task({ description, startDate, completed, id }) {
       </div>
       <button
         onClick={deleteTask}
-        className="text-red-400/50 hover:text-red-400 transition-colors duration-300"
+        className="text-red-400/50 hover:text-red-400 transition-colors duration-300 "
       >
         <Trash2 size={18} />
       </button>
