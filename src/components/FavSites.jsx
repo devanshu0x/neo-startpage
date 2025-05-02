@@ -34,7 +34,7 @@ function FavSites() {
           <a 
             key={site.name}
             href={site.url}
-            className="text-indigo-300 hover:text-indigo-400 text-center"
+            className="text-indigo-300 bg-black/30 px-2 py-1 rounded-xl hover:text-indigo-400 text-center"
           >
             {site.name}
           </a>
